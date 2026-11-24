@@ -4,6 +4,7 @@
    القيم بين [ ] هي أماكن تنتظر معلوماتك.
    ============================================================ */
 window.SITE = {
+  handle: "ward",                                  // يظهر في بطاقة الكود
   links: {
     telegram: "https://t.me/YOUR_TELEGRAM",      // [مطلوب] رابط تلغرام
     email: "you@example.com",                     // [مطلوب] الإيميل
@@ -19,6 +20,23 @@ window.SITE = {
     nav: { services: "Services", work: "Work", process: "Process", faq: "FAQ", contact: "Contact" },
     cta: "Start a project",
     cta2: "Say hello",
+    banner: ["Questions? Message us on Telegram — we usually reply within a day.", "Open Telegram"],
+    subs: {
+      services: "One small team, from idea to launch. No hand-offs, no guesswork.",
+      work: "A few things we have built and shipped.",
+      process: "The same five steps every time, so you always know what is next.",
+      principles: "The standards every build is measured against before it ships.",
+      faq: "Quick answers to what people ask before reaching out."
+    },
+    principlesTitle: "Principles, not promises",
+    principles: [
+      ["Security by design", "Access control and encryption are decided at the start, not patched in later."],
+      ["Built to scale", "Systems sized for where your business is going, not just where it is today."],
+      ["Modern tools", "Chosen for what they solve, not for hype."],
+      ["Clean code", "Readable, documented and tested — easy for the next developer."],
+      ["Fast by default", "Speed is a feature. Every release is measured."],
+      ["Real support", "A direct line to the person who built it."]
+    ],
     hero: {
       kicker: "Independent studio · Open for projects",
       h1: ["Software that", "feels", "effortless."],
@@ -74,6 +92,23 @@ window.SITE = {
     nav: { services: "الخدمات", work: "الأعمال", process: "المراحل", faq: "أسئلة", contact: "تواصل" },
     cta: "ابدأ مشروعك",
     cta2: "تواصل معنا",
+    banner: ["عندك سؤال؟ راسلنا على تلغرام — نرد عادةً خلال يوم.", "افتح تلغرام"],
+    subs: {
+      services: "فريق صغير واحد من الفكرة حتى الإطلاق. بلا وسطاء وبلا تخمين.",
+      work: "بعض ما بنيناه وأطلقناه.",
+      process: "الخطوات الخمس نفسها كل مرة، لتعرف دائمًا ما التالي.",
+      principles: "المعايير التي يُقاس بها كل مشروع قبل تسليمه.",
+      faq: "إجابات سريعة عمّا يسأله الناس قبل التواصل."
+    },
+    principlesTitle: "مبادئ لا وعود",
+    principles: [
+      ["أمان من البداية", "الصلاحيات والتشفير تُحدَّد في أول التصميم، لا تُرقَّع لاحقًا."],
+      ["قابل للتوسع", "أنظمة مبنية لمستقبل عملك، لا لحاضره فقط."],
+      ["أدوات حديثة", "نختارها لما تحلّه من مشاكل، لا لأنها رائجة."],
+      ["كود نظيف", "مقروء وموثّق ومُختبر، يسهل على أي مطوّر بعدنا."],
+      ["سريع افتراضيًا", "السرعة ميزة، وكل إصدار يُقاس."],
+      ["دعم حقيقي", "تواصل مباشر مع من بنى المشروع."]
+    ],
     hero: {
       kicker: "استوديو مستقل · متاحون لمشاريع جديدة",
       h1: ["برمجيات", "تبدو", "سهلة."],
