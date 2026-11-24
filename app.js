@@ -58,48 +58,60 @@
   }
   function pad(i) { return (i < 9 ? "0" : "") + (i + 1); }
 
+  var IMG = '<img src="butterfly.png" alt="" width="475" height="436" decoding="async">';
+
   function render() {
     var t = S[lang], L = S.links, ar = lang === "ar";
     root.lang = lang; root.dir = ar ? "rtl" : "ltr"; root.dataset.theme = theme;
     document.title = t.title;
     document.querySelector('meta[name="description"]').content = t.desc;
     var tg = L.telegram || ("mailto:" + L.email);
-    var bannerOn = store.get("banner") !== "off";
+    var bannerOn = store.get("banner") !== "off" && !!L.telegram;
+    var hasWork = t.work && t.work.length;
+    var n = 0, num = function () { n++; return pad(n - 1); };
+
+    var navKeys = ["services"].concat(hasWork ? ["work"] : []).concat(["about", "process", "faq", "contact"]);
+    var navLabel = Object.assign({ work: t.workTitle }, t.nav);
 
     var top = "";
     if (bannerOn) top += '<div class="banner"><p>' + esc(t.banner[0]) + '</p><a href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.banner[1]) + '</a><button id="bx" aria-label="close">' + I.close + "</button></div>";
-    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + esc((t.brand[0] || "W")) + "</span><b>" + esc(t.brand) + "</b></a>" +
-      '<nav id="nav">' + ["services", "work", "process", "faq", "contact"].map(function (k) { return '<a href="#' + k + '">' + esc(t.nav[k]) + "</a>"; }).join("") + "</nav>" +
+    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + IMG + "</span><b>" + esc(t.brand) + "</b></a>" +
+      '<nav id="nav">' + navKeys.map(function (k) { return '<a href="#' + k + '">' + esc(navLabel[k]) + "</a>"; }).join("") + "</nav>" +
       '<div class="tools"><button class="pill" id="lang">' + esc(t.langSwitch) + '</button><button class="round" id="theme" aria-label="theme">' + (theme === "dark" ? I.sun : I.moon) + '</button><button class="round menu" id="menu" aria-label="menu">' + I.menu + "</button></div></div>";
     document.getElementById("top").innerHTML = top;
 
-    var h = t.hero, handle = S.handle || "ward";
+    var h = t.hero;
     var html = '<section class="hero"><div class="hero-l"><p class="kick rv"><span class="dot"></span>' + esc(h.kicker) + "</p>" +
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
-      '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#contact">' + esc(t.cta2) + "</a></div>" +
+      '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="hero-r rv" dir="ltr"><div class="term"><div class="tb"><i></i><i></i><i></i><span>~/' + esc(handle) + '</span></div><pre><code>' +
-      '<span class="m">$</span> ' + esc(handle) + ' new project\n<span class="ok">✓</span> scope &amp; budget agreed\n<span class="ok">✓</span> design approved\n<span class="ok">✓</span> built, tested, deployed\n<span class="ok">✓</span> source code handed over\n\n<span class="m">$</span> <span class="cur"></span></code></pre></div>' +
-      '<div class="chip c1"><b>24h</b><span>reply</span></div><div class="chip c2"><b>100%</b><span>yours</span></div></div></section>';
+      '<div class="stage rv"><div class="halo"></div><div class="ring r1"></div><div class="ring r2"></div><div class="fly">' + IMG + "</div></div></section>";
 
-    html += '<section id="services">' + head("01", t.servicesTitle, t.subs.services) + '<div class="grid">' +
-      t.services.map(function (s, i) { return '<article class="card rv"><span class="ic">' + I[svcIcons[i % 8]] + "</span><h3>" + esc(s[0]) + "</h3><p>" + esc(s[1]) + "</p></article>"; }).join("") + "</div></section>";
+    html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
+      [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
 
-    html += '<section id="work">' + head("02", t.workTitle, t.subs.work) + '<div class="works">' +
-      t.work.map(function (w, i) { return '<a class="work rv" href="' + esc(w[3]) + '" target="_blank" rel="noopener"><div class="wt"><span class="tagc">' + esc(w[1]) + '</span><span class="go">' + I.up + "</span></div><h3>" + esc(w[0]) + "</h3><p>" + esc(w[2]) + '</p><span class="big">' + pad(i) + "</span></a>"; }).join("") + "</div></section>";
+    html += '<section id="services">' + head(num(), t.servicesTitle, t.subs.services) + '<div class="grid bento">' +
+      t.services.map(function (s, i) { return '<article class="card rv' + (i === 0 ? " big1" : "") + '"><span class="ic">' + I[svcIcons[i % 8]] + "</span><h3>" + esc(s[0]) + "</h3><p>" + esc(s[1]) + "</p></article>"; }).join("") + "</div></section>";
 
-    html += '<section id="process">' + head("03", t.processTitle, t.subs.process) + '<ol class="steps">' +
+    if (hasWork) {
+      html += '<section id="work">' + head(num(), t.workTitle, t.subs.work) + '<div class="works">' +
+        t.work.map(function (w, i) { return '<a class="work rv" href="' + esc(w[3]) + '" target="_blank" rel="noopener"><div class="wt"><span class="tagc">' + esc(w[1]) + '</span><span class="go">' + I.up + "</span></div><h3>" + esc(w[0]) + "</h3><p>" + esc(w[2]) + '</p><span class="big">' + pad(i) + "</span></a>"; }).join("") + "</div></section>";
+    }
+
+    html += '<section id="about" class="about"><div class="ab-img rv"><div class="halo"></div><div class="fly">' + IMG + '</div></div><div>' + head(num(), t.aboutTitle, t.subs.about) +
+      t.about.map(function (p) { return '<p class="ab rv">' + esc(p) + "</p>"; }).join("") +
+      '<div class="stats">' + t.stats.map(function (s) { return '<div class="stat rv"><b>' + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span></div>"; }).join("") + "</div></div></section>";
+
+    html += '<section id="process">' + head(num(), t.processTitle, t.subs.process) + '<ol class="steps">' +
       t.process.map(function (p, i) { return '<li class="rv"><span class="num">' + pad(i) + "</span><h3>" + esc(p[0]) + "</h3><p>" + esc(p[1]) + "</p></li>"; }).join("") + "</ol></section>";
 
-    html += '<section id="principles">' + head("04", t.principlesTitle, t.subs.principles) + '<div class="grid g3">' +
+    html += '<section id="principles">' + head(num(), t.principlesTitle, t.subs.principles) + '<div class="grid g3">' +
       t.principles.map(function (p, i) { return '<article class="card rv"><span class="ic">' + I[prIcons[i % 6]] + "</span><h3>" + esc(p[0]) + "</h3><p>" + esc(p[1]) + "</p></article>"; }).join("") + "</div></section>";
 
-    html += '<section id="faq" class="split"><div>' + head("05", t.faqTitle, t.subs.faq) + '</div><div class="faq">' +
+    html += '<section id="faq" class="split"><div>' + head(num(), t.faqTitle, t.subs.faq) + '</div><div class="faq">' +
       t.faq.map(function (f) { return '<details class="rv"><summary>' + esc(f[0]) + "<i></i></summary><p>" + esc(f[1]) + "</p></details>"; }).join("") + "</div></section>";
 
-    html += '<section class="owner"><div class="who rv"><div class="av">' + esc(t.owner.name.replace(/[\[\]]/g, "").trim()[0] || "W") + '</div><div><span class="tagc">' + esc(t.ownerTitle) + "</span><h3>" + esc(t.owner.name) + '</h3><span class="role">' + esc(t.owner.role) + "</span><p>" + esc(t.owner.bio) + "</p></div></div></section>";
-
-    html += '<section id="contact" class="cta"><div class="ctab rv"><h2>' + esc(t.closing[0]) + "</h2><p>" + esc(t.closing[1]) + '</p><div class="btns"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + "</a>" +
+    html += '<section id="contact" class="cta"><div class="ctab rv"><div class="halo"></div><h2>' + esc(t.closing[0]) + "</h2><p>" + esc(t.closing[1]) + '</p><div class="btns"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + "</a>" +
       (L.email ? '<a class="btn" href="mailto:' + esc(L.email) + '">' + esc(L.email) + "</a>" : "") + "</div></div></section>";
 
     document.getElementById("main").innerHTML = html;
@@ -112,6 +124,14 @@
     document.querySelectorAll("#nav a").forEach(function (a) { a.onclick = function () { hd.classList.remove("open"); }; });
     var bx = document.getElementById("bx");
     if (bx) bx.onclick = function () { store.set("banner", "off"); render(); };
+
+    document.querySelectorAll(".card,.work").forEach(function (c) {
+      c.addEventListener("pointermove", function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty("--mx", e.clientX - r.left + "px");
+        c.style.setProperty("--my", e.clientY - r.top + "px");
+      });
+    });
 
     var els = document.querySelectorAll(".rv");
     if ("IntersectionObserver" in window) {
