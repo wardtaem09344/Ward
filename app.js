@@ -85,7 +85,7 @@
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="eyewrap rv"><video id="eyev" autoplay muted loop playsinline preload="auto" poster="poster.jpg" width="800" height="800" aria-hidden="true"><source src="eye.mp4" type="video/mp4"></video></div></section>';
+      '<div class="stage rv"><div class="halo"></div><div class="ring r1"></div><div class="ring r2"></div><div class="fly">' + IMG + "</div></div></section>";
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -98,7 +98,7 @@
         t.work.map(function (w, i) { return '<a class="work rv" href="' + esc(w[3]) + '" target="_blank" rel="noopener"><div class="wt"><span class="tagc">' + esc(w[1]) + '</span><span class="go">' + I.up + "</span></div><h3>" + esc(w[0]) + "</h3><p>" + esc(w[2]) + '</p><span class="big">' + pad(i) + "</span></a>"; }).join("") + "</div></section>";
     }
 
-    html += '<section id="about" class="about"><div class="ab-img rv"><div class="halo"></div><div class="fly">' + IMG + '</div></div><div>' + head(num(), t.aboutTitle, t.subs.about) +
+    html += '<section id="about" class="about"><div class="ab-img rv"><video id="eyev" autoplay muted loop playsinline preload="auto" poster="poster.jpg" width="800" height="800" aria-hidden="true"><source src="eye.mp4" type="video/mp4"></video></div><div>' + head(num(), t.aboutTitle, t.subs.about) +
       t.about.map(function (p) { return '<p class="ab rv">' + esc(p) + "</p>"; }).join("") +
       '<div class="stats">' + t.stats.map(function (s) { return '<div class="stat rv"><b>' + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span></div>"; }).join("") + "</div></div></section>";
 
