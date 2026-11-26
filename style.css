@@ -482,3 +482,40 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 /* Telegram avatar: square, full eye */
 .tgav{width:116px;height:116px;border-radius:24px;object-fit:cover}
 @media(max-width:640px){.tgav{width:104px;height:104px;border-radius:22px}}
+
+/* ===== v10: every big icon moves differently ===== */
+.ic svg *{transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.14)}}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(45deg)}}
+@keyframes bl{50%{transform:translateX(-1.8px)}}
+@keyframes br{50%{transform:translateX(1.8px)}}
+@keyframes blink{0%,60%,100%{opacity:1}30%{opacity:.12}}
+@keyframes draw{0%{stroke-dashoffset:1}45%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@keyframes buzz{0%,66%,100%{transform:rotate(0)}70%{transform:rotate(-8deg)}74%{transform:rotate(8deg)}78%{transform:rotate(-6deg)}82%{transform:rotate(5deg)}86%{transform:rotate(0)}}
+@keyframes floaty{50%{transform:translate(1.6px,-2.2px)}}
+@keyframes grow{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+@keyframes flash{0%,58%,100%{opacity:1;transform:none}62%{opacity:.15}66%{opacity:1;transform:scale(1.18)}70%{opacity:.35}74%{opacity:1;transform:none}}
+@keyframes pop{0%,100%{transform:scale(1)}40%{transform:scale(1.4)}60%{transform:scale(.95)}}
+@keyframes sweep{0%,100%{transform:rotate(-42deg)}50%{transform:rotate(58deg)}}
+@keyframes beat{0%,45%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}58%{transform:scale(1.1)}}
+.ic .i-ai .st1{animation:pulse 3.2s ease-in-out infinite}
+.ic .i-ai .st2{animation:twinkle 2.2s ease-in-out infinite}
+.ic .i-code .bl{animation:bl 2.4s ease-in-out infinite}
+.ic .i-code .br{animation:br 2.4s ease-in-out infinite}
+.ic .i-web .d1,.ic .i-web .d2,.ic .i-web .d3{animation:blink 1.8s infinite}
+.ic .i-web .d2{animation-delay:.25s}.ic .i-web .d3{animation-delay:.5s}
+.ic .i-web .wl,.ic .i-shield .ck,.ic .i-chat .c1,.ic .i-chat .c2{stroke-dasharray:1;animation:draw 3.2s ease-in-out infinite}
+.ic .i-chat .c2{animation-delay:.45s}
+.ic .i-mobile .ph{animation:buzz 3.4s infinite}
+.ic .i-cloud .cl{animation:floaty 3.4s ease-in-out infinite}
+.ic .i-auto .sp{animation:spin 4.5s linear infinite}
+.ic .i-scale .b1,.ic .i-scale .b2,.ic .i-scale .b3{transform-origin:50% 100%;animation:grow 2.6s ease-in-out infinite}
+.ic .i-scale .b2{animation-delay:.3s}.ic .i-scale .b3{animation-delay:.6s}
+.ic .i-bolt path{animation:flash 3s infinite}
+.ic .i-clean .pk{animation:pop 2.8s ease-in-out infinite}
+.ic .i-gauge .nd{transform-box:view-box;transform-origin:12px 17px;animation:sweep 3.4s ease-in-out infinite}
+.ic .i-heart .hb{animation:beat 1.8s infinite}
+
+/* logo: bare W mark */
+.mark{width:40px;height:40px}
+.mark svg{overflow:visible}

@@ -17,19 +17,19 @@
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + (extra || "") + "</svg>";
   }
   var I = {
-    ai: svg('<path class="f" d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>'),
-    code: svg('<rect class="f" x="3" y="4" width="18" height="16" rx="3.5"/><path d="M10 9.5L7.5 12l2.5 2.5M14 9.5l2.5 2.5-2.5 2.5"/>'),
-    web: svg('<rect class="f" x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M6.5 6.8h.01M9 6.8h.01"/>'),
-    mobile: svg('<rect class="f" x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>'),
-    shield: svg('<path class="f" d="M12 3l7 3v5.5c0 4.3-2.9 7.6-7 9.5-4.1-1.9-7-5.2-7-9.5V6z"/><path d="M9 12l2 2 4-4"/>'),
-    cloud: svg('<path class="f" d="M7 18.5a4 4 0 010-8 5.2 5.2 0 019.8-1.2A4.6 4.6 0 0117 18.5z"/>'),
-    auto: svg('<path d="M20 11a8 8 0 00-14-4M4 4v4h4M4 13a8 8 0 0014 4M20 20v-4h-4"/>'),
-    chat: svg('<path class="f" d="M4 5h16v11H9.5L4 20z"/><path d="M8 9.5h8M8 12.5h5"/>'),
-    scale: svg('<rect class="f" x="4" y="11" width="3" height="9" rx="1"/><rect class="f" x="10.5" y="4" width="3" height="16" rx="1"/><rect class="f" x="17" y="14" width="3" height="6" rx="1"/>'),
+    ai: svg('<path class="f st1" d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path class="st2" d="M18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>'),
+    code: svg('<rect class="f" x="3" y="4" width="18" height="16" rx="3.5"/><path class="bl" d="M10 9.5L7.5 12l2.5 2.5"/><path class="br" d="M14 9.5l2.5 2.5-2.5 2.5"/>'),
+    web: svg('<rect class="f" x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18"/><path class="d1" d="M6.5 6.8h.01"/><path class="d2" d="M9 6.8h.01"/><path class="d3" d="M11.5 6.8h.01"/><path class="wl" pathLength="1" d="M7 13h6M7 16h9"/>'),
+    mobile: svg('<g class="ph"><rect class="f" x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></g>'),
+    shield: svg('<path class="f" d="M12 3l7 3v5.5c0 4.3-2.9 7.6-7 9.5-4.1-1.9-7-5.2-7-9.5V6z"/><path class="ck" pathLength="1" d="M9 12l2 2 4-4"/>'),
+    cloud: svg('<path class="f cl" d="M7 18.5a4 4 0 010-8 5.2 5.2 0 019.8-1.2A4.6 4.6 0 0117 18.5z"/>'),
+    auto: svg('<g class="sp"><path d="M20 11a8 8 0 00-14-4M4 4v4h4M4 13a8 8 0 0014 4M20 20v-4h-4"/></g>'),
+    chat: svg('<path class="f" d="M4 5h16v11H9.5L4 20z"/><path class="c1" pathLength="1" d="M8 9.5h8"/><path class="c2" pathLength="1" d="M8 12.5h5"/>'),
+    scale: svg('<rect class="f b1" x="4" y="11" width="3" height="9" rx="1"/><rect class="f b2" x="10.5" y="4" width="3" height="16" rx="1"/><rect class="f b3" x="17" y="14" width="3" height="6" rx="1"/>'),
     bolt: svg('<path class="f" d="M13 3L5 14h6l-1 7 8-11h-6z"/>'),
-    clean: svg('<circle class="f" cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.5 2.5 4.5-5"/>'),
-    gauge: svg('<path class="f" d="M4 17a8 8 0 1116 0"/><path d="M12 17l4-5"/>'),
-    heart: svg('<path class="f" d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/>'),
+    clean: svg('<circle class="f" cx="12" cy="12" r="9"/><path class="pk" d="M8.5 12.2l2.5 2.5 4.5-5"/>'),
+    gauge: svg('<path class="f" d="M4 17a8 8 0 1116 0"/><path class="nd" d="M12 17l4-5"/>'),
+    heart: svg('<path class="f hb" d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/>'),
     sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>'),
     moon: svg('<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/>'),
     menu: svg('<path d="M4 7h16M4 12h16M4 17h16"/>'),
@@ -42,6 +42,7 @@
     tiktok: svg('<path d="M14 4v10.5a3.5 3.5 0 11-3.5-3.5M14 4c.3 2.2 1.8 3.7 4 4"/>'),
     mail: svg('<rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="M4 7l8 6 8-6"/>')
   };
+  Object.keys(I).forEach(function (k) { I[k] = I[k].replace('<svg ', '<svg class="i-' + k + '" '); });
   var svcIcons = ["ai", "code", "web", "mobile", "shield", "cloud", "auto", "chat"];
   var prIcons = ["shield", "scale", "bolt", "clean", "gauge", "heart"];
 
@@ -59,7 +60,7 @@
   function pad(i) { return (i < 9 ? "0" : "") + (i + 1); }
 
 
-  var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="var(--acc)"/><path d="M7 24Q24 8 41 24Q24 40 7 24Z" fill="none" stroke="var(--acc-ink)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="24" cy="24" r="6.2" fill="var(--acc-ink)"/><circle cx="24" cy="24" r="2.4" fill="var(--acc)"/><circle cx="26.2" cy="21.8" r="1.3" fill="var(--acc-ink)" opacity=".0"/></svg>';
+  var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 13l9.5 23L24 19l9.5 17L43 13" fill="none" stroke="var(--acc-t)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function render() {
     var t = S[lang], L = S.links, ar = lang === "ar";
@@ -118,7 +119,7 @@
       t.principles.map(function (p, i) { return '<article class="card rv"><span class="ic">' + I[prIcons[i % 6]] + "</span><h3>" + esc(p[0]) + "</h3><p>" + esc(p[1]) + "</p></article>"; }).join("") + "</div></section>";
 
     html += '<section id="faq" class="split"><div>' + head(num(), t.faqTitle, t.subs.faq) + '</div><div class="faq">' +
-      t.faq.map(function (f) { return '<details class="rv"><summary>' + esc(f[0]) + "<i></i></summary><p>" + esc(f[1]) + "</p></details>"; }).join("") + "</div></section>";
+      t.faq.map(function (f) { return '<details class="rv" name="faq"><summary>' + esc(f[0]) + "<i></i></summary><p>" + esc(f[1]) + "</p></details>"; }).join("") + "</div></section>";
 
     html += '<section id="contact" class="cta"><div class="ctab rv"><div class="halo"></div><h2>' + esc(t.closing[0]) + "</h2><p>" + esc(t.closing[1]) + '</p><div class="btns"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + "</a>" +
       (L.email ? '<a class="btn" href="mailto:' + esc(L.email) + '">' + esc(L.email) + "</a>" : "") + "</div></div></section>";
@@ -154,6 +155,13 @@
       var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduce) ev.removeAttribute("autoplay"); else { var pr = ev.play(); if (pr && pr.catch) pr.catch(function () {}); }
     }
+    var dets = document.querySelectorAll(".faq details");
+    dets.forEach(function (d) {
+      d.addEventListener("toggle", function () {
+        if (d.open) dets.forEach(function (o) { if (o !== d) o.open = false; });
+      });
+    });
+
     var els = document.querySelectorAll(".rv");
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (es) {
