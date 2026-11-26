@@ -519,3 +519,10 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 /* logo: bare W mark */
 .mark{width:40px;height:40px}
 .mark svg{overflow:visible}
+
+/* ===== v11: rotating headline word ===== */
+.hero h1 .pre,.hero h1 .rot{display:block}
+.hero h1 .rot{font-style:normal;min-height:1.1em;transition:transform .28s ease,opacity .28s ease;will-change:transform,opacity}
+.hero h1 .rot.out{transform:translateY(-40%);opacity:0}
+.hero h1 .rot.in{animation:rotin .42s cubic-bezier(.2,.8,.3,1)}
+@keyframes rotin{from{transform:translateY(45%);opacity:0}to{transform:none;opacity:1}}

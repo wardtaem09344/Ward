@@ -1,6 +1,8 @@
 (function () {
   var S = window.SITE, root = document.documentElement;
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  var noMotion = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var rotT = null;
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -63,6 +65,7 @@
   var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 13l9.5 23L24 19l9.5 17L43 13" fill="none" stroke="var(--acc-t)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function render() {
+    clearInterval(rotT);
     var t = S[lang], L = S.links, ar = lang === "ar";
     root.lang = lang; root.dir = ar ? "rtl" : "ltr"; root.dataset.theme = theme;
     document.title = t.title;
@@ -84,7 +87,7 @@
 
     var h = t.hero;
     var html = '<section class="hero"><div class="hero-l"><p class="kick rv"><span class="dot"></span>' + esc(h.kicker) + "</p>" +
-      '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
+      '<h1 class="rv"><span class="pre">' + esc(h.pre) + '</span><em class="rot" id="rot">' + esc(h.words[0]) + '</em></h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
       '<div class="hero-r rv"><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span>ward.config.js</span></div><pre><code>' +
@@ -161,6 +164,43 @@
         if (d.open) dets.forEach(function (o) { if (o !== d) o.open = false; });
       });
     });
+
+    var rot = document.getElementById("rot");
+    if (rot && h.words.length > 1 && !noMotion) {
+      var wi = 0;
+      rotT = setInterval(function () {
+        if (document.hidden) return;
+        rot.classList.add("out");
+        setTimeout(function () {
+          wi = (wi + 1) % h.words.length;
+          rot.textContent = h.words[wi];
+          rot.classList.remove("out");
+          rot.classList.add("in");
+          setTimeout(function () { rot.classList.remove("in"); }, 420);
+        }, 280);
+      }, 2600);
+    }
+
+    if (!noMotion && "IntersectionObserver" in window) {
+      document.querySelectorAll(".stat b").forEach(function (b) {
+        var m = /^(\d+)(.*)$/.exec(b.textContent);
+        if (!m || +m[1] < 10) return;
+        var n = +m[1], suf = m[2];
+        b.textContent = "0" + suf;
+        var io2 = new IntersectionObserver(function (es) {
+          if (!es[0].isIntersecting) return;
+          io2.disconnect();
+          var t0 = null;
+          (function step(ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / 1400, 1), e = 1 - Math.pow(1 - p, 3);
+            b.textContent = Math.round(n * e) + suf;
+            if (p < 1) requestAnimationFrame(step);
+          })(performance.now());
+        }, { threshold: 0.6 });
+        io2.observe(b);
+      });
+    }
 
     var els = document.querySelectorAll(".rv");
     if ("IntersectionObserver" in window) {

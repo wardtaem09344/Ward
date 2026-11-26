@@ -23,7 +23,8 @@ window.SITE = {
     banner: ["Questions? Message us on Telegram — we usually reply within a day.", "Open Telegram"],
     hero: {
       kicker: "Software studio · Open for new projects",
-      h1: ["Software with", "grace", "and precision."],
+      pre: "We build",
+      words: ["web apps", "AI tools", "automation", "mobile apps", "custom software"],
       p: "We design and build web apps, AI tools and automation. Small team, direct communication, clean results.",
       facts: ["You own the code", "Reply within a day", "Direct line to the builder"]
     },
@@ -97,7 +98,8 @@ window.SITE = {
     banner: ["عندك سؤال؟ راسلنا على تلغرام — نرد عادةً خلال يوم.", "افتح تلغرام"],
     hero: {
       kicker: "استوديو برمجة · متاحون لمشاريع جديدة",
-      h1: ["برمجيات بـ", "رقيّ", "ودقّة."],
+      pre: "نبني",
+      words: ["تطبيقات ويب", "بوتات ذكية", "أتمتة", "تطبيقات موبايل", "برمجيات مخصصة"],
       p: "نصمّم ونبني تطبيقات ويب وأدوات ذكاء اصطناعي وأتمتة. فريق صغير، تواصل مباشر، ونتائج نظيفة.",
       facts: ["الكود ملكك", "رد خلال يوم", "تواصل مباشر مع المنفّذ"]
     },
