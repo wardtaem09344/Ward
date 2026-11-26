@@ -85,7 +85,7 @@
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="eyewrap rv"><img src="eye.jpg" alt="" width="900" height="900" fetchpriority="high"></div></section>';
+      '<div class="eyewrap rv"><video id="eyev" autoplay muted loop playsinline preload="auto" poster="poster.jpg" width="800" height="800" aria-hidden="true"><source src="eye.mp4" type="video/mp4"></video></div></section>';
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -137,6 +137,12 @@
       });
     });
 
+    var ev = document.getElementById("eyev");
+    if (ev) {
+      ev.muted = true;
+      var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) ev.removeAttribute("autoplay"); else { var pr = ev.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    }
     var els = document.querySelectorAll(".rv");
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (es) {
