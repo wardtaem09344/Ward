@@ -58,7 +58,6 @@
   }
   function pad(i) { return (i < 9 ? "0" : "") + (i + 1); }
 
-  var IMG = '<img src="butterfly.png" alt="" width="475" height="436" decoding="async">';
 
   function render() {
     var t = S[lang], L = S.links, ar = lang === "ar";
@@ -75,7 +74,7 @@
 
     var top = "";
     if (bannerOn) top += '<div class="banner"><p>' + esc(t.banner[0]) + '</p><a href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.banner[1]) + '</a><button id="bx" aria-label="close">' + I.close + "</button></div>";
-    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + IMG + "</span><b>" + esc(t.brand) + "</b></a>" +
+    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + esc(Array.from(t.brand)[0]) + "</span><b>" + esc(t.brand) + "</b></a>" +
       '<nav id="nav">' + navKeys.map(function (k) { return '<a href="#' + k + '">' + esc(navLabel[k]) + "</a>"; }).join("") + "</nav>" +
       '<div class="tools"><button class="pill" id="lang">' + esc(t.langSwitch) + '</button><button class="round" id="theme" aria-label="theme">' + (theme === "dark" ? I.sun : I.moon) + '</button><button class="round menu" id="menu" aria-label="menu">' + I.menu + "</button></div></div>";
     document.getElementById("top").innerHTML = top;
@@ -85,7 +84,7 @@
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="stage rv"><div class="halo"></div><div class="ring r1"></div><div class="ring r2"></div><div class="fly">' + IMG + "</div></div></section>";
+      "</section>";
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
