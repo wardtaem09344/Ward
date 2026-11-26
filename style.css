@@ -366,3 +366,19 @@ h1 em{background:none;-webkit-background-clip:initial;background-clip:initial;co
 footer{background:none}
 .mq span:after{color:var(--mute)}
 ::selection{background:var(--ink);color:var(--bg)}
+
+/* ===== v6: one soft solid accent (no gradients) ===== */
+:root{--acc:#a8e6cf;--acc-t:#a8e6cf;--acc-ink:#0b2a1f}
+:root[data-theme=light]{--acc:#1f7a5c;--acc-t:#1f7a5c;--acc-ink:#ffffff}
+h1 em{color:var(--acc-t);-webkit-text-fill-color:currentColor}
+.dot,.r1:before,.r2:before{background:var(--acc-t)}
+.card:hover,.work:hover,details[open],.ico:hover,.btn:not(.pri):hover,.pill:hover,.round:hover{border-color:var(--acc-t)}
+.btn:not(.pri):hover,.pill:hover,.round:hover,.ico:hover{color:var(--acc-t)}
+.work:hover .go{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+summary i:before,summary i:after{background:var(--acc-t)}
+details[open] summary i{background:var(--acc);border-color:var(--acc)}
+details[open] summary i:before,details[open] summary i:after{background:var(--acc-ink)}
+.steps li:hover:after{background:var(--acc-t)}
+.mq span:after{color:var(--acc-t)}
+nav a:hover{color:var(--acc-t)}
+::selection{background:var(--acc);color:var(--acc-ink)}
