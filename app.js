@@ -126,7 +126,7 @@
     var user = (L.telegram || "").split("/").pop();
     if (L.telegram) {
       var ulink = '<a class="ulink" href="' + esc(L.telegram) + '" target="_blank" rel="noopener" dir="ltr">@' + esc(user) + "</a>";
-      html += '<section class="tgs"><div class="tgc rv"><img class="tgav" src="eye-sm.jpg" alt="" width="256" height="256" loading="lazy"><h3>' + esc(t.tg.title) + "</h3><p>" + esc(t.tg.text).replace("{u}", ulink) +
+      html += '<section class="tgs"><div class="tgc rv"><img class="tgav" src="eye-tg.jpg" alt="" width="360" height="360" loading="lazy"><h3>' + esc(t.tg.title) + "</h3><p>" + esc(t.tg.text).replace("{u}", ulink) +
         '</p><a class="btn" href="' + esc(L.telegram) + '" target="_blank" rel="noopener">' + I.telegram + esc(t.tg.btn) + "</a></div></section>";
     }
     document.getElementById("main").innerHTML = html;

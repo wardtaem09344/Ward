@@ -478,3 +478,7 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 .tgc .btn{margin-top:8px}.tgc .btn svg{width:18px;height:18px}
 [dir=rtl] .tgc .btn svg{transform:scaleX(-1)}
 @media(max-width:640px){.tgc{padding:26px 22px}.tgav{width:84px;height:84px}}
+
+/* Telegram avatar: square, full eye */
+.tgav{width:116px;height:116px;border-radius:24px;object-fit:cover}
+@media(max-width:640px){.tgav{width:104px;height:104px;border-radius:22px}}
