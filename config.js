@@ -19,6 +19,7 @@ window.SITE = {
     nav: { services: "Services", about: "Studio", process: "Process", faq: "FAQ", contact: "Contact" },
     cta: "Start a project",
     cta2: "Our process",
+    tg: ["Prefer a quick chat?", "Message me on Telegram"],
     banner: ["Questions? Message us on Telegram — we usually reply within a day.", "Open Telegram"],
     hero: {
       kicker: "Software studio · Open for new projects",
@@ -92,6 +93,7 @@ window.SITE = {
     nav: { services: "الخدمات", about: "الاستوديو", process: "المراحل", faq: "أسئلة", contact: "تواصل" },
     cta: "ابدأ مشروعك",
     cta2: "كيف نعمل",
+    tg: ["تفضّل محادثة سريعة؟", "راسلني على تلغرام"],
     banner: ["عندك سؤال؟ راسلنا على تلغرام — نرد عادةً خلال يوم.", "افتح تلغرام"],
     hero: {
       kicker: "استوديو برمجة · متاحون لمشاريع جديدة",

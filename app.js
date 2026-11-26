@@ -85,7 +85,7 @@
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="stage rv"><div class="halo"></div><div class="ring r1"></div><div class="ring r2"></div><div class="fly">' + IMG + "</div></div></section>";
+      '<div class="eyewrap rv"><img src="eye.jpg" alt="" width="900" height="900" fetchpriority="high"></div></section>';
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -114,6 +114,10 @@
     html += '<section id="contact" class="cta"><div class="ctab rv"><div class="halo"></div><h2>' + esc(t.closing[0]) + "</h2><p>" + esc(t.closing[1]) + '</p><div class="btns"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + "</a>" +
       (L.email ? '<a class="btn" href="mailto:' + esc(L.email) + '">' + esc(L.email) + "</a>" : "") + "</div></div></section>";
 
+    var user = (L.telegram || "").split("/").pop();
+    if (L.telegram) {
+      html += '<section class="tgs"><a class="tgc rv" href="' + esc(L.telegram) + '" target="_blank" rel="noopener"><img class="tgav" src="eye-sm.jpg" alt="" width="256" height="256" loading="lazy"><div class="tgt"><span class="tagc">' + esc(t.tg[0]) + "</span><b>" + esc(t.brand) + '</b><span class="user" dir="ltr">@' + esc(user) + '</span></div><span class="tgb">' + I.telegram + "<i>" + esc(t.tg[1]) + "</i></span></a></section>";
+    }
     document.getElementById("main").innerHTML = html;
     document.getElementById("foot").innerHTML = '<div class="bar"><span>© ' + new Date().getFullYear() + " " + esc(t.brand) + ". " + esc(t.footer) + '</span><div class="soc">' + socials() + "</div></div>";
 
