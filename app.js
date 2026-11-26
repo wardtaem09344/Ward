@@ -64,8 +64,60 @@
 
   var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 13l9.5 23L24 19l9.5 17L43 13" fill="none" stroke="var(--acc-t)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  function cK(x) { return '<b class="k">' + x + "</b>"; }
+  function cS(x) { return '<b class="s">' + x + "</b>"; }
+  function cC(x) { return '<b class="c">' + x + "</b>"; }
+  var SNIPS = [
+    { f: "ward.config.js", l: [
+      cK("const") + " project = {",
+      "  idea: " + cS('"yours"') + ",",
+      "  design: " + cS('"clean"') + ",",
+      "  code: " + cS('"yours to keep"') + ",",
+      "};",
+      "",
+      cK("await") + " build(project);",
+      cC("// ✓ shipped. no surprises.")
+    ] },
+    { f: "api/orders.ts", l: [
+      cK("export async function") + " POST(req) {",
+      "  " + cK("const") + " user = " + cK("await") + " auth(req);",
+      "  " + cK("if") + " (!user) " + cK("return") + " deny(401);",
+      "  " + cK("const") + " data = parse(" + cK("await") + " req.json());",
+      "  " + cK("const") + " o = " + cK("await") + " db.orders.add(data);",
+      "  " + cK("await") + " queue.emit(" + cS('"order.new"') + ", o.id);",
+      "  " + cK("return") + " Response.json(o, {status:201});",
+      "}"
+    ] },
+    { f: "bot.py", l: [
+      "@bot.on_message",
+      cK("async def") + " reply(msg):",
+      "    ctx = " + cK("await") + " memory.load(msg.user)",
+      "    ans = " + cK("await") + " ai.ask(msg.text, ctx)",
+      "    " + cK("await") + " msg.reply(ans)",
+      "    " + cK("await") + " memory.save(msg.user, ans)",
+      "",
+      cC("# answers in seconds, 24/7")
+    ] },
+    { f: "terminal", l: [
+      cC("$") + " npm run build",
+      "✓ build ok",
+      "✓ tests passed",
+      "✓ security checks passed",
+      cC("$") + " vercel deploy --prod",
+      "✓ deployed",
+      "",
+      cC("# ship it.")
+    ] }
+  ];
+  function snipHTML(s) {
+    return s.l.map(function (x, i) { return '<span class="l" style="--i:' + i + '">' + x + "</span>"; }).join("\n") +
+      '\n<span class="l" style="--i:' + s.l.length + '"><span class="cur"></span></span>';
+  }
+  var termT = null;
+
   function render() {
     clearInterval(rotT);
+    clearInterval(termT);
     var t = S[lang], L = S.links, ar = lang === "ar";
     root.lang = lang; root.dir = ar ? "rtl" : "ltr"; root.dataset.theme = theme;
     document.title = t.title;
@@ -90,15 +142,7 @@
       '<h1 class="rv"><span class="pre">' + esc(h.pre) + '</span><em class="rot" id="rot">' + esc(h.words[0]) + '</em></h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="hero-r rv"><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span>ward.config.js</span></div><pre><code>' +
-      '<span class="l" style="--i:0"><b class="k">const</b> project = {</span>\n' +
-      '<span class="l" style="--i:1">  idea: <b class="s">"yours"</b>,</span>\n' +
-      '<span class="l" style="--i:2">  design: <b class="s">"clean"</b>,</span>\n' +
-      '<span class="l" style="--i:3">  code: <b class="s">"yours to keep"</b>,</span>\n' +
-      '<span class="l" style="--i:4">};</span>\n\n' +
-      '<span class="l" style="--i:5"><b class="k">await</b> build(project);</span>\n' +
-      '<span class="l" style="--i:6"><b class="c">// ✓ shipped. no surprises.</b></span>\n' +
-      '<span class="l" style="--i:7"><span class="cur"></span></span></code></pre></div></div>' + "</section>";
+      '<div class="hero-r rv"><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span id="tfile">' + SNIPS[0].f + '</span></div><pre><code id="tcode">' + snipHTML(SNIPS[0]) + '</code></pre></div></div>' + "</section>";
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -164,6 +208,21 @@
         if (d.open) dets.forEach(function (o) { if (o !== d) o.open = false; });
       });
     });
+
+    var tcode = document.getElementById("tcode"), tfile = document.getElementById("tfile");
+    if (tcode && !noMotion) {
+      var si = 0;
+      termT = setInterval(function () {
+        if (document.hidden) return;
+        tcode.classList.add("fade");
+        setTimeout(function () {
+          si = (si + 1) % SNIPS.length;
+          tfile.textContent = SNIPS[si].f;
+          tcode.innerHTML = snipHTML(SNIPS[si]);
+          tcode.classList.remove("fade");
+        }, 350);
+      }, 7500);
+    }
 
     var rot = document.getElementById("rot");
     if (rot && h.words.length > 1 && !noMotion) {

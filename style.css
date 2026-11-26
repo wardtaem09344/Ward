@@ -526,3 +526,9 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 .hero h1 .rot.out{transform:translateY(-40%);opacity:0}
 .hero h1 .rot.in{animation:rotin .42s cubic-bezier(.2,.8,.3,1)}
 @keyframes rotin{from{transform:translateY(45%);opacity:0}to{transform:none;opacity:1}}
+
+/* ===== v12: rotating code window ===== */
+.hero-r code{display:block;min-height:18em;transition:opacity .35s ease}
+.hero-r code.fade{opacity:0}
+.hero-r .l{animation-delay:calc(var(--i) * .3s + .35s)}
+.hero-r pre{overflow:hidden}
