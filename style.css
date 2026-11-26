@@ -335,3 +335,34 @@ footer{background:linear-gradient(180deg,transparent,var(--glow))}
   nav{border-radius:20px}
 }
 @media(min-width:1021px){.bento .card:last-child{grid-column:span 2}}
+
+/* ===== v5: flat, no gradients ===== */
+:root{--acc:#f3f1ee;--acc-t:#f3f1ee;--acc-ink:#0a0a0d;--glow:#ffffff0a;--line-hi:#2e2e38;--hi:#ffffff08;--surface:#101013;--surface2:#17171b;--bg:#08080a;--line:#232329}
+:root[data-theme=light]{--acc:#0d0d12;--acc-t:#0d0d12;--acc-ink:#ffffff;--glow:#0000000a;--line-hi:#d4d1c8;--hi:#ffffffcc;--surface:#ffffff;--surface2:#efede6;--bg:#f6f5f1;--line:#e2dfd6}
+body{background-image:none;background-color:var(--bg)}
+.banner{background:var(--acc);color:var(--acc-ink)}
+.banner a{background:var(--acc-ink);color:var(--acc)}
+h1 em{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--ink);-webkit-text-fill-color:currentColor}
+:root[data-theme=light] h1 em{background:none}
+.btn.pri,:root[data-theme=light] .btn.pri{background:var(--acc);color:var(--acc-ink);border-color:var(--acc);box-shadow:none}
+.btn.pri:hover{box-shadow:none;opacity:.88}
+.card,.work,.stat,details,.ab-img,.ctab,.pill,.round,.ico,.kick,.btn:not(.pri),.go,.big1{
+  background:var(--surface);border:1px solid var(--line)}
+.card,.work,details{box-shadow:none}
+.card:hover,.work:hover,details[open],.ico:hover{background:var(--surface);border-color:var(--mute)}
+.ctab{background:var(--surface)}
+.ab-img{background:var(--surface2)}
+.card:before,.work:before,.ic:before{display:none}
+.ic{background:var(--surface2);border:1px solid var(--line);box-shadow:none}
+.card:hover .ic{background:var(--acc);color:var(--acc-ink);box-shadow:none;border-color:var(--acc)}
+.halo{background:radial-gradient(circle,#ffffff14 0,transparent 66%);filter:none}
+:root[data-theme=light] .halo{background:radial-gradient(circle,#00000010 0,transparent 66%)}
+.ctab .halo{display:none}
+.fly img{filter:drop-shadow(0 0 22px #ffffff40)}
+:root[data-theme=light] .fly img{filter:invert(1) drop-shadow(0 8px 18px #00000026)}
+.r1:before,.r2:before{box-shadow:none;background:var(--ink)}
+.dot{box-shadow:none;animation:none;background:var(--ink)}
+.steps li:after{box-shadow:0 0 0 5px var(--bg)}
+footer{background:none}
+.mq span:after{color:var(--mute)}
+::selection{background:var(--ink);color:var(--bg)}
