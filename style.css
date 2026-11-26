@@ -420,3 +420,17 @@ h1 em{color:var(--acc-t)}
   .tgb{margin:0;width:100%;justify-content:center}
   .eyewrap{max-width:340px;border-radius:32px}
 }
+
+/* ===== v8: new heading font (Sora, self-hosted) ===== */
+@font-face{font-family:"Sora";font-weight:600;font-style:normal;font-display:swap;src:url(fonts/sora-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Sora";font-weight:700;font-style:normal;font-display:swap;src:url(fonts/sora-latin-700-normal.woff2) format("woff2")}
+:root{--serif:"Sora",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1{font-weight:700;letter-spacing:-.035em;line-height:1.08;font-size:clamp(38px,5.6vw,70px)}
+h1 em{font-style:normal}
+h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
+.logo,.card h3,.work h3,.steps h3,.stat b,.tgt b,.ctab h2,.big1 h3,.who h3{font-weight:600;letter-spacing:-.02em}
+.ctab h2{font-weight:700;font-size:clamp(32px,5.4vw,60px)}
+.logo{font-size:19px}
+.card h3{font-size:18px}.big1 h3{font-size:26px}
+.stat b{font-size:26px}
+[dir=rtl] h1{font-weight:700;letter-spacing:0}
