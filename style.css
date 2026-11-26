@@ -450,3 +450,31 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 .hero h1{font-size:clamp(40px,7.4vw,92px);max-width:11.5em}
 .hero .lead{max-width:36em}
 @media(max-width:860px){.hero{padding-top:48px}}
+
+/* ===== v9: eye logo, hero code window, Telegram card like reference ===== */
+.mark{background:none;transform:none;width:38px;height:38px;border-radius:0;display:block;font:inherit}
+.mark svg{width:100%;height:100%;display:block}
+.hero{grid-template-columns:1.1fr .9fr;gap:48px;padding:72px 0 8px}
+.hero h1{font-size:clamp(38px,5.2vw,68px);max-width:none}
+.hero-r{min-width:0;display:flex;align-items:center}
+.hero-r .term{width:100%;transform:rotate(1.2deg);background:var(--surface);border:1px solid var(--line-hi);border-radius:28px;box-shadow:0 30px 70px -30px #000a}
+.hero-r .term:hover{transform:rotate(0)}
+.hero-r pre{padding:22px 24px 26px;font:400 14.5px/2 var(--mono);color:var(--ink);overflow:hidden;white-space:pre}
+.hero-r .l{display:inline-block;opacity:0;transform:translateY(5px);animation:ln .5s ease forwards;animation-delay:calc(var(--i) * .45s + .5s)}
+@keyframes ln{to{opacity:1;transform:none}}
+.hero-r b{font-weight:500}.k{color:var(--acc-t)}.s{color:var(--cream)}.c{color:var(--mute)}
+.hero-r .cur{background:var(--acc-t)}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:28px;padding-top:44px}.hero-r pre{font-size:13px;padding:18px}}
+@media(prefers-reduced-motion:reduce){.hero-r .l{opacity:1;transform:none}}
+
+.tgs{padding-top:48px}
+.tgc{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:34px;border-radius:32px;flex-wrap:nowrap}
+.tgc:hover{transform:none;border-color:var(--line)}
+.tgav{width:92px;height:92px;border-radius:50%;object-fit:cover;border:1px solid var(--line-hi)}
+.tgc h3{font:600 clamp(22px,3.4vw,30px)/1.25 var(--serif);max-width:20em}[dir=rtl] .tgc h3{font-family:var(--sans)}
+.tgc p{color:var(--mute);max-width:34em;font-size:16px}
+.ulink{color:var(--acc-t);font-weight:600;unicode-bidi:isolate}
+.ulink:hover{text-decoration:underline}
+.tgc .btn{margin-top:8px}.tgc .btn svg{width:18px;height:18px}
+[dir=rtl] .tgc .btn svg{transform:scaleX(-1)}
+@media(max-width:640px){.tgc{padding:26px 22px}.tgav{width:84px;height:84px}}

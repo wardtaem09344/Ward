@@ -59,6 +59,8 @@
   function pad(i) { return (i < 9 ? "0" : "") + (i + 1); }
 
 
+  var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="var(--acc)"/><path d="M7 24Q24 8 41 24Q24 40 7 24Z" fill="none" stroke="var(--acc-ink)" stroke-width="2.6" stroke-linejoin="round"/><circle cx="24" cy="24" r="6.2" fill="var(--acc-ink)"/><circle cx="24" cy="24" r="2.4" fill="var(--acc)"/><circle cx="26.2" cy="21.8" r="1.3" fill="var(--acc-ink)" opacity=".0"/></svg>';
+
   function render() {
     var t = S[lang], L = S.links, ar = lang === "ar";
     root.lang = lang; root.dir = ar ? "rtl" : "ltr"; root.dataset.theme = theme;
@@ -74,7 +76,7 @@
 
     var top = "";
     if (bannerOn) top += '<div class="banner"><p>' + esc(t.banner[0]) + '</p><a href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.banner[1]) + '</a><button id="bx" aria-label="close">' + I.close + "</button></div>";
-    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + esc(Array.from(t.brand)[0]) + "</span><b>" + esc(t.brand) + "</b></a>" +
+    top += '<div class="bar"><a class="logo" href="#top"><span class="mark">' + LOGO + "</span><b>" + esc(t.brand) + "</b></a>" +
       '<nav id="nav">' + navKeys.map(function (k) { return '<a href="#' + k + '">' + esc(navLabel[k]) + "</a>"; }).join("") + "</nav>" +
       '<div class="tools"><button class="pill" id="lang">' + esc(t.langSwitch) + '</button><button class="round" id="theme" aria-label="theme">' + (theme === "dark" ? I.sun : I.moon) + '</button><button class="round menu" id="menu" aria-label="menu">' + I.menu + "</button></div></div>";
     document.getElementById("top").innerHTML = top;
@@ -84,7 +86,15 @@
       '<h1 class="rv">' + esc(h.h1[0]) + " <em>" + esc(h.h1[1]) + "</em> " + esc(h.h1[2]) + '</h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      "</section>";
+      '<div class="hero-r rv"><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span>ward.config.js</span></div><pre><code>' +
+      '<span class="l" style="--i:0"><b class="k">const</b> project = {</span>\n' +
+      '<span class="l" style="--i:1">  idea: <b class="s">"yours"</b>,</span>\n' +
+      '<span class="l" style="--i:2">  design: <b class="s">"clean"</b>,</span>\n' +
+      '<span class="l" style="--i:3">  code: <b class="s">"yours to keep"</b>,</span>\n' +
+      '<span class="l" style="--i:4">};</span>\n\n' +
+      '<span class="l" style="--i:5"><b class="k">await</b> build(project);</span>\n' +
+      '<span class="l" style="--i:6"><b class="c">// ✓ shipped. no surprises.</b></span>\n' +
+      '<span class="l" style="--i:7"><span class="cur"></span></span></code></pre></div></div>' + "</section>";
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -115,7 +125,9 @@
 
     var user = (L.telegram || "").split("/").pop();
     if (L.telegram) {
-      html += '<section class="tgs"><a class="tgc rv" href="' + esc(L.telegram) + '" target="_blank" rel="noopener"><img class="tgav" src="eye-sm.jpg" alt="" width="256" height="256" loading="lazy"><div class="tgt"><span class="tagc">' + esc(t.tg[0]) + "</span><b>" + esc(t.brand) + '</b><span class="user" dir="ltr">@' + esc(user) + '</span></div><span class="tgb">' + I.telegram + "<i>" + esc(t.tg[1]) + "</i></span></a></section>";
+      var ulink = '<a class="ulink" href="' + esc(L.telegram) + '" target="_blank" rel="noopener" dir="ltr">@' + esc(user) + "</a>";
+      html += '<section class="tgs"><div class="tgc rv"><img class="tgav" src="eye-sm.jpg" alt="" width="256" height="256" loading="lazy"><h3>' + esc(t.tg.title) + "</h3><p>" + esc(t.tg.text).replace("{u}", ulink) +
+        '</p><a class="btn" href="' + esc(L.telegram) + '" target="_blank" rel="noopener">' + I.telegram + esc(t.tg.btn) + "</a></div></section>";
     }
     document.getElementById("main").innerHTML = html;
     document.getElementById("foot").innerHTML = '<div class="bar"><span>© ' + new Date().getFullYear() + " " + esc(t.brand) + ". " + esc(t.footer) + '</span><div class="soc">' + socials() + "</div></div>";

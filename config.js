@@ -12,14 +12,14 @@ window.SITE = {
     tiktok: ""
   },
   en: {
-    brand: "Farasha",
+    brand: "Ward Coding",
     tag: "Software studio",
-    title: "Farasha — software studio",
+    title: "Ward Coding — software studio",
     desc: "A small studio that designs and builds web apps, AI tools and automation, with care for every detail.",
     nav: { services: "Services", about: "Studio", process: "Process", faq: "FAQ", contact: "Contact" },
     cta: "Start a project",
     cta2: "Our process",
-    tg: ["Prefer a quick chat?", "Message me on Telegram"],
+    tg: { title: "Talk directly to the builder.", text: "No account managers, no hand-offs — message {u} on Telegram.", btn: "Open Telegram" },
     banner: ["Questions? Message us on Telegram — we usually reply within a day.", "Open Telegram"],
     hero: {
       kicker: "Software studio · Open for new projects",
@@ -50,7 +50,7 @@ window.SITE = {
     ],
     aboutTitle: "Small studio. Careful work.",
     about: [
-      "Farasha is a software studio focused on building things properly: clear scope, clean code and honest communication.",
+      "Ward Coding is a software studio focused on building things properly: clear scope, clean code and honest communication.",
       "You talk directly to the person building your product — no account managers, no long chains of hand-offs. That keeps projects fast, calm and easy to follow."
     ],
     work: [],
@@ -86,14 +86,14 @@ window.SITE = {
     langSwitch: "عربي"
   },
   ar: {
-    brand: "فراشة",
+    brand: "وارد كودينغ",
     tag: "استوديو برمجة",
-    title: "فراشة — استوديو برمجة",
+    title: "وارد كودينغ — استوديو برمجة",
     desc: "استوديو صغير يصمّم ويبني تطبيقات ويب وأدوات ذكاء اصطناعي وأتمتة، بعناية في كل تفصيل.",
     nav: { services: "الخدمات", about: "الاستوديو", process: "المراحل", faq: "أسئلة", contact: "تواصل" },
     cta: "ابدأ مشروعك",
     cta2: "كيف نعمل",
-    tg: ["تفضّل محادثة سريعة؟", "راسلني على تلغرام"],
+    tg: { title: "تحدّث مباشرة مع المنفّذ.", text: "بلا مدراء حسابات ولا وسطاء — راسل {u} على تلغرام.", btn: "افتح تلغرام" },
     banner: ["عندك سؤال؟ راسلنا على تلغرام — نرد عادةً خلال يوم.", "افتح تلغرام"],
     hero: {
       kicker: "استوديو برمجة · متاحون لمشاريع جديدة",
@@ -124,7 +124,7 @@ window.SITE = {
     ],
     aboutTitle: "استوديو صغير. عمل متقن.",
     about: [
-      "فراشة استوديو برمجة هدفه أن تُبنى الأشياء كما يجب: نطاق واضح، وكود نظيف، وتواصل صادق.",
+      "وارد كودينغ استوديو برمجة هدفه أن تُبنى الأشياء كما يجب: نطاق واضح، وكود نظيف، وتواصل صادق.",
       "تتحدث مباشرة مع من يبني منتجك — بلا مدراء حسابات ولا سلاسل تسليم طويلة. هكذا تبقى المشاريع سريعة وهادئة وسهلة المتابعة."
     ],
     work: [],
