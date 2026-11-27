@@ -8,8 +8,7 @@
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
 
-  var lang = (navigator.language || "").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
-  lang = store.get("lang") || lang;
+  var lang = store.get("lang") === "ar" ? "ar" : "en";
   var q = new URLSearchParams(location.search).get("lang");
   if (q) lang = q === "ar" ? "ar" : "en";
 
@@ -269,5 +268,55 @@
       els.forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 60 + "ms"; io.observe(el); });
     } else els.forEach(function (el) { el.classList.add("in"); });
   }
+
+  /* cursor ring, magnetic buttons, click burst (desktop pointer only for ring/magnet) */
+  (function () {
+    var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (fine && !noMotion) {
+      var ring = document.createElement("div");
+      ring.className = "cring";
+      document.body.appendChild(ring);
+      var tx = -100, ty = -100, cx = -100, cy = -100, shown = false;
+      document.addEventListener("pointermove", function (e) {
+        tx = e.clientX; ty = e.clientY;
+        if (!shown) { shown = true; cx = tx; cy = ty; ring.classList.add("on"); }
+        var el = e.target.closest ? e.target.closest("a,button,summary,.card,.ico,.round,.pill") : null;
+        ring.classList.toggle("big", !!el);
+        var b = e.target.closest ? e.target.closest(".btn") : null;
+        document.querySelectorAll(".btn.mag").forEach(function (x) { if (x !== b) { x.style.transform = ""; x.classList.remove("mag"); } });
+        if (b) {
+          var r = b.getBoundingClientRect();
+          b.classList.add("mag");
+          b.style.transform = "translate(" + ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + "px," + ((e.clientY - r.top - r.height / 2) * 0.28).toFixed(1) + "px)";
+        }
+      }, { passive: true });
+      document.addEventListener("pointerleave", function () { ring.classList.remove("on"); shown = false; });
+      (function loop() {
+        cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
+        ring.style.transform = "translate(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px)";
+        requestAnimationFrame(loop);
+      })();
+    }
+
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest ? e.target.closest(".ic,.ico,.round,.mark,.tgav") : null;
+      if (!t) return;
+      var r = t.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+      if (!noMotion && t.animate) {
+        t.animate([{ transform: "scale(1)" }, { transform: "scale(1.28) rotate(-6deg)" }, { transform: "scale(.94)" }, { transform: "scale(1)" }], { duration: 480, easing: "cubic-bezier(.2,.9,.3,1.2)" });
+        var cols = ["#ff5468", "#e8283c", "#f0d3b6", "#ffffff"];
+        for (var i = 0; i < 12; i++) {
+          var p = document.createElement("i");
+          p.className = "burst";
+          p.style.left = x + "px"; p.style.top = y + "px";
+          p.style.background = cols[i % cols.length];
+          document.body.appendChild(p);
+          var ang = (Math.PI * 2 * i) / 12 + Math.random() * 0.5, dist = 34 + Math.random() * 34;
+          p.animate([{ transform: "translate(-50%,-50%) scale(1)", opacity: 1 }, { transform: "translate(calc(-50% + " + Math.cos(ang) * dist + "px),calc(-50% + " + Math.sin(ang) * dist + "px)) scale(.2)", opacity: 0 }], { duration: 620 + Math.random() * 200, easing: "cubic-bezier(.1,.7,.3,1)" }).onfinish = (function (n) { return function () { n.remove(); }; })(p);
+        }
+      }
+    });
+  })();
+
   render();
 })();

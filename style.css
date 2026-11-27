@@ -532,3 +532,13 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 .hero-r code.fade{opacity:0}
 .hero-r .l{animation-delay:calc(var(--i) * .3s + .35s)}
 .hero-r pre{overflow:hidden}
+
+/* ===== v13: cursor ring, magnetic buttons, icon burst ===== */
+.cring{position:fixed;left:-17px;top:-17px;width:34px;height:34px;border:1.5px solid var(--acc-t);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transition:opacity .25s,width .25s,height .25s,margin .25s,background-color .25s;will-change:transform}
+.cring.on{opacity:.75}
+.cring.big{width:54px;height:54px;margin:-10px 0 0 -10px;background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.btn{transition:transform .25s cubic-bezier(.2,.8,.3,1),background-color .2s,border-color .2s,color .2s}
+.burst{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:9998}
+.ic,.ico,.round,.mark{cursor:pointer}
+@media (hover:none),(pointer:coarse){.cring{display:none}}
+@media (prefers-reduced-motion:reduce){.cring{display:none}}
