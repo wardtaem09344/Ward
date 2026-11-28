@@ -63,6 +63,14 @@
 
   var LOGO = '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 13l9.5 23L24 19l9.5 17L43 13" fill="none" stroke="var(--acc-t)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+  var EYE = '<svg id="eyesvg" class="eyesvg" viewBox="0 0 120 70" width="124" height="72" role="img" aria-label="eye">' +
+    '<defs><clipPath id="eyeclip"><path d="M4 35Q60-10 116 35Q60 80 4 35Z"/></clipPath></defs>' +
+    '<g class="eyeblink"><g clip-path="url(#eyeclip)"><rect x="0" y="0" width="120" height="70" fill="#f3e6d9"/>' +
+    '<g id="eyeball"><circle cx="60" cy="35" r="23" fill="var(--acc)"/><circle cx="60" cy="35" r="23" fill="none" stroke="#0b0a0c" stroke-opacity=".35" stroke-width="3"/>' +
+    '<circle cx="60" cy="35" r="14" fill="none" stroke="#0b0a0c" stroke-opacity=".22" stroke-width="1.4"/>' +
+    '<circle cx="60" cy="35" r="9" fill="#0b0a0c"/><circle cx="53" cy="28" r="4" fill="#fff" fill-opacity=".9"/><circle cx="67" cy="41" r="1.8" fill="#fff" fill-opacity=".6"/></g>' +
+    '<path d="M0 0H120V22Q60-4 0 22Z" fill="#000" fill-opacity=".14"/></g>' +
+    '<path d="M4 35Q60-10 116 35Q60 80 4 35Z" fill="none" stroke="var(--acc-t)" stroke-width="3" stroke-linejoin="round"/></g></svg>';
   function cK(x) { return '<b class="k">' + x + "</b>"; }
   function cS(x) { return '<b class="s">' + x + "</b>"; }
   function cC(x) { return '<b class="c">' + x + "</b>"; }
@@ -141,7 +149,7 @@
       '<h1 class="rv"><span class="pre">' + esc(h.pre) + '</span><em class="rot" id="rot">' + esc(h.words[0]) + '</em></h1><p class="lead rv">' + esc(h.p) + "</p>" +
       '<div class="btns rv"><a class="btn pri" href="' + esc(tg) + '" target="_blank" rel="noopener">' + esc(t.cta) + I.arrow + '</a><a class="btn" href="#process">' + esc(t.cta2) + "</a></div>" +
       '<ul class="facts rv">' + h.facts.map(function (f) { return "<li>" + I.clean + esc(f) + "</li>"; }).join("") + "</ul></div>" +
-      '<div class="hero-r rv"><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span id="tfile">' + SNIPS[0].f + '</span></div><pre><code id="tcode">' + snipHTML(SNIPS[0]) + '</code></pre></div></div>' + "</section>";
+      '<div class="hero-r rv"><div class="eyew" aria-hidden="true">' + EYE + '</div><div class="term" dir="ltr"><div class="tb"><i></i><i></i><i></i><span id="tfile">' + SNIPS[0].f + '</span></div><pre><code id="tcode">' + snipHTML(SNIPS[0]) + '</code></pre></div></div>' + "</section>";
 
     html += '<div class="marquee" aria-hidden="true"><div class="mq">' +
       [0, 1].map(function () { return "<div>" + t.marquee.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") + "</div>"; }).join("") + "</div></div>";
@@ -181,7 +189,23 @@
 
     var hd = document.getElementById("top");
     document.getElementById("lang").onclick = function () { lang = lang === "en" ? "ar" : "en"; store.set("lang", lang); render(); };
-    document.getElementById("theme").onclick = function () { theme = theme === "dark" ? "light" : "dark"; store.set("theme", theme); render(); };
+    document.getElementById("theme").onclick = function (e) {
+      theme = theme === "dark" ? "light" : "dark"; store.set("theme", theme);
+      var b = this.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2;
+      if (noMotion || !document.startViewTransition) { render(); return; }
+      var rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      var root = document.documentElement;
+      root.classList.add("swap");
+      var vt = document.startViewTransition(function () { render(); });
+      var done = function () { setTimeout(function () { root.classList.remove("swap"); }, 80); };
+      vt.finished.then(done, done);
+      vt.ready.then(function () {
+        document.documentElement.animate(
+          { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + rad + "px at " + x + "px " + y + "px)"] },
+          { duration: 700, easing: "cubic-bezier(.45,0,.2,1)", pseudoElement: "::view-transition-new(root)" }
+        );
+      }).catch(function () {});
+    };
     document.getElementById("menu").onclick = function () { hd.classList.toggle("open"); };
     document.querySelectorAll("#nav a").forEach(function (a) { a.onclick = function () { hd.classList.remove("open"); }; });
     var bx = document.getElementById("bx");
@@ -316,6 +340,30 @@
         }
       }
     });
+  })();
+
+  /* eye follows pointer; wanders when idle */
+  (function () {
+    var tx = 0, ty = 0, cx = 0, cy = 0, last = 0, px = 0, py = 0, has = false;
+    document.addEventListener("pointermove", function (e) { px = e.clientX; py = e.clientY; has = true; last = performance.now(); }, { passive: true });
+    document.addEventListener("touchmove", function (e) { var t = e.touches[0]; if (t) { px = t.clientX; py = t.clientY; has = true; last = performance.now(); } }, { passive: true });
+    setInterval(function () {
+      if (noMotion || performance.now() - last < 2600) return;
+      tx = (Math.random() * 2 - 1) * 16; ty = (Math.random() * 2 - 1) * 7;
+    }, 1700);
+    (function loop() {
+      var svg = document.getElementById("eyesvg"), ball = document.getElementById("eyeball");
+      if (svg && ball && !noMotion) {
+        if (has && performance.now() - last < 2600) {
+          var r = svg.getBoundingClientRect(), ex = r.left + r.width / 2, ey = r.top + r.height / 2;
+          var dx = px - ex, dy = py - ey, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 260);
+          tx = (dx / d) * 17 * k; ty = (dy / d) * 8 * k;
+        }
+        cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
+        ball.setAttribute("transform", "translate(" + cx.toFixed(2) + " " + cy.toFixed(2) + ")");
+      }
+      requestAnimationFrame(loop);
+    })();
   })();
 
   render();

@@ -542,3 +542,17 @@ h2{font-weight:600;letter-spacing:-.025em;font-size:clamp(28px,3.8vw,44px)}
 .ic,.ico,.round,.mark{cursor:pointer}
 @media (hover:none),(pointer:coarse){.cring{display:none}}
 @media (prefers-reduced-motion:reduce){.cring{display:none}}
+
+/* ===== v14: eye in hero + telegram-style theme reveal ===== */
+.hero-r{position:relative;padding-top:54px}
+.eyew{position:absolute;top:0;right:26px;z-index:2;pointer-events:none}
+[dir=rtl] .eyew{right:auto;left:26px}
+.eyesvg{display:block;width:124px;height:auto;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18))}
+.eyeblink{transform-box:fill-box;transform-origin:center;animation:eblink 5.2s infinite}
+@keyframes eblink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.07)}}
+@media (max-width:860px){.hero-r{padding-top:50px}.eyew{right:18px}[dir=rtl] .eyew{left:18px}.eyesvg{width:104px}}
+@media (prefers-reduced-motion:reduce){.eyeblink{animation:none}}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}
+::view-transition-new(root){z-index:2}
+.swap .rv,.swap .l,.swap .card,.swap .work{animation:none!important;transition:none!important;opacity:1!important}
