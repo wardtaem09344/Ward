@@ -162,7 +162,7 @@
         t.work.map(function (w, i) { return '<a class="work rv" href="' + esc(w[3]) + '" target="_blank" rel="noopener"><div class="wt"><span class="tagc">' + esc(w[1]) + '</span><span class="go">' + I.up + "</span></div><h3>" + esc(w[0]) + "</h3><p>" + esc(w[2]) + '</p><span class="big">' + pad(i) + "</span></a>"; }).join("") + "</div></section>";
     }
 
-    html += '<section id="about" class="about"><div class="ab-img rv"><video id="eyev" autoplay muted loop playsinline preload="auto" poster="poster.jpg" width="800" height="800" aria-hidden="true"><source src="eye.mp4" type="video/mp4"></video></div><div>' + head(num(), t.aboutTitle, t.subs.about) +
+    html += '<section id="about" class="about"><div class="ab-img rv"><video id="eyev" muted loop playsinline preload="none" poster="poster.jpg" width="800" height="800" aria-hidden="true"></video></div><div>' + head(num(), t.aboutTitle, t.subs.about) +
       t.about.map(function (p) { return '<p class="ab rv">' + esc(p) + "</p>"; }).join("") +
       '<div class="stats">' + t.stats.map(function (s) { return '<div class="stat rv"><b>' + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span></div>"; }).join("") + "</div></div></section>";
 
@@ -222,8 +222,19 @@
     var ev = document.getElementById("eyev");
     if (ev) {
       ev.muted = true;
-      var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) ev.removeAttribute("autoplay"); else { var pr = ev.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      var small = innerWidth <= 900 || (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType || "")));
+      var loaded = false;
+      var play = function () { var pr = ev.play(); if (pr && pr.catch) pr.catch(function () {}); };
+      if ("IntersectionObserver" in window && !noMotion) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (en) {
+            if (en.isIntersecting) {
+              if (!loaded) { loaded = true; ev.src = small ? "eye-m.mp4" : "eye.mp4"; ev.load(); }
+              play();
+            } else if (loaded) ev.pause();
+          });
+        }, { rootMargin: "200px 0px" }).observe(ev);
+      }
     }
     var dets = document.querySelectorAll(".faq details");
     dets.forEach(function (d) {
@@ -300,9 +311,10 @@
       var ring = document.createElement("div");
       ring.className = "cring";
       document.body.appendChild(ring);
-      var tx = -100, ty = -100, cx = -100, cy = -100, shown = false;
+      var tx = -100, ty = -100, cx = -100, cy = -100, shown = false, raf = 0, tick;
       document.addEventListener("pointermove", function (e) {
         tx = e.clientX; ty = e.clientY;
+        if (!raf) raf = requestAnimationFrame(tick);
         if (!shown) { shown = true; cx = tx; cy = ty; ring.classList.add("on"); }
         var el = e.target.closest ? e.target.closest("a,button,summary,.card,.ico,.round,.pill") : null;
         ring.classList.toggle("big", !!el);
@@ -315,11 +327,11 @@
         }
       }, { passive: true });
       document.addEventListener("pointerleave", function () { ring.classList.remove("on"); shown = false; });
-      (function loop() {
-        cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
+      tick = function () {
+        cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
         ring.style.transform = "translate(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px)";
-        requestAnimationFrame(loop);
-      })();
+        raf = (Math.abs(tx - cx) > 0.3 || Math.abs(ty - cy) > 0.3) ? requestAnimationFrame(tick) : 0;
+      };
     }
 
     document.addEventListener("click", function (e) {
@@ -353,12 +365,13 @@
     }, 1700);
     (function loop() {
       var svg = document.getElementById("eyesvg"), ball = document.getElementById("eyeball");
-      if (svg && ball && !noMotion) {
+      if (svg && ball && !noMotion && !document.hidden && window.scrollY < 900) {
         if (has && performance.now() - last < 2600) {
           var r = svg.getBoundingClientRect(), ex = r.left + r.width / 2, ey = r.top + r.height / 2;
           var dx = px - ex, dy = py - ey, d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 260);
           tx = (dx / d) * 17 * k; ty = (dy / d) * 8 * k;
         }
+        if (Math.abs(tx - cx) < 0.03 && Math.abs(ty - cy) < 0.03) { requestAnimationFrame(loop); return; }
         cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
         ball.setAttribute("transform", "translate(" + cx.toFixed(2) + " " + cy.toFixed(2) + ")");
       }
